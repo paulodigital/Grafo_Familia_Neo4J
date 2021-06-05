@@ -1,0 +1,145 @@
+﻿[
+  {
+    "n": {
+"identity": 0,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "Joseph Smith",
+"datebirth": 1961
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 1,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "Joan Smith",
+"datebirth": 1963
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 2,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "John Smith",
+"datebirth": 1982
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 3,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "Josephine Smith",
+"datebirth": 1986
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 4,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "Jonathan Smith",
+"datebirth": 1994
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 5,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "Jennifer K. L. Smith",
+"datebirth": 1984
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 6,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "Jen-El Smith",
+"datebirth": 2005
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 7,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "Jil-El Smith",
+"datebirth": 2007
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 8,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "Juju-El Smith",
+"datebirth": 2011
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 9,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "Jor-El Smith",
+"datebirth": 2013
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 10,
+"labels": [
+        "People"
+      ],
+"properties": {
+"name": "Cousine Smith Oliver",
+"datebirth": 2013
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 11,
+"labels": [
+        "SoccerTeam"
+      ],
+"properties": {
+"name": "Chelsea"
+      }
+    }
+  }
+]

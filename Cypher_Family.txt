@@ -1,0 +1,96 @@
+BANCO DE DADOS DA FAMILIA TERRA
+--------------------------------------------------------------------------
+
+CYPHER – Creating the Smith family -> 11 nodes
+
+CREATE (dad:People {name:"Joseph Smith", datebirth: 1961 })
+CREATE (mom:People {name:"Joan Smith", datebirth: 1963 })
+CREATE (me:People {name:"John Smith", datebirth: 1982 })
+CREATE (sister:People {name:"Josephine Smith", datebirth: 1986 })
+CREATE (bro:People {name:"Jonathan Smith", datebirth: 1994 })
+CREATE (wife:People {name:"Jennifer K. L. Smith", datebirth: 1984 })
+CREATE (children1:People {name:"Jen-El Smith", datebirth: 2005 })
+CREATE (children2:People {name:"Jil-El Smith", datebirth: 2007 })
+CREATE (children3:People {name:"Juju-El Smith", datebirth: 2011 })
+CREATE (children4:People {name:"Jor-El Smith", datebirth: 2013 })
+CREATE (cousin:People {name:"Cousine Smith Oliver", datebirth: 2013 }
+
+CYPHER – Creating the basic relationship between the Smiths 1/2
+
+MATCH (dad:People {name:"Joseph Smith" })
+MATCH (mom:People {name:"Joan Smith" })
+MATCH (me:People {name:"John Smith" })
+MATCH (sister:People {name:"Josephine Smith" })
+MATCH (bro:People {name:"Jonathan Smith" })
+CREATE (me)-[:IS_SON_OF]->(dad)
+CREATE (me)-[:IS_SON_OF]->(mom)
+CREATE (sister)-[:IS_SON_OF]->(dad)
+CREATE (sister)-[:IS_SON_OF]->(mom)
+CREATE (bro)-[:IS_SON_OF]->(dad)
+
+CYPHER – Creating the basic relationship between the Smiths 2/2
+
+MATCH (sister:People {name:"Josephine Smith" })
+MATCH (cousin:People {name:"Cousine Smith Oliver" })
+MATCH (me:People {name:"John Smith" })
+MATCH (wife:People {name:"Jennifer K. L. Smith" })
+MATCH (children1:People {name:"Jen-El Smith" })
+MATCH (children2:People {name:"Jil-El Smith" })
+MATCH (children3:People {name:"Juju-El Smith" })
+MATCH (children4:People {name:"Jor-El Smith" })
+CREATE (cousin)-[:IS_SON_OF]->(sister)
+CREATE (me)-[:IS_MARRIED_WITH]->(wife)
+CREATE (children1)-[:IS_SON_OF]->(me)
+CREATE (children2)-[:IS_SON_OF]->(me)
+CREATE (children2)-[:IS_SON_OF]->(wife)
+CREATE (children3)-[:IS_SON_OF]->(me)
+CREATE (children3)-[:IS_SON_OF]->(wife)
+CREATE (children4)-[:IS_SON_OF]->(me)
+CREATE (children4)-[:IS_SON_OF]->(wife)
+
+SOME QUESTIONS!!!
+1) Quem são os pais de John Smith?
+MATCH (me:People {name:"John Smith" })
+MATCH (me)-[:IS_SON_OF]->(parents)
+RETURN parents.name
+
+2) Quem são os filhos de John Smith?
+MATCH (me:People {name:"John Smith" })
+MATCH (me)<-[:IS_SON_OF]-(children)
+RETURN children.name
+
+3) Quem são os irmãos de John Smith?
+MATCH (me:People {name:"John Smith" })
+MATCH (me)-[:IS_SON_OF]->(parents)<-[:IS_SON_OF]-(brothers)
+RETURN DISTINCT brothers.name
+
+4) Quem são os irmãos de John Smith do mesmo pai e da mesma mãe?
+MATCH (me:People {name:"John Smith" })
+MATCH (me)-[:IS_SON_OF]->(parents)<-[:IS_SON_OF]-(brothers)
+WITH me, brothers, count(parents) as parents_count
+WHERE parents_count = length(me-[:IS_SON_OF]->())
+RETURN brothers.name
+
+5) Quem são os primos de Cousine?
+MATCH (cousin:People {name:"Cousine Smith Oliver" })
+MATCH (cousin)-[:IS_SON_OF]->(mysister)
+MATCH (mysister)-[:IS_SON_OF]->(ourparents)<-[:IS_SON_OF]-(brothers_of_my_sister)
+MATCH (brothers_of_my_sister)<-[:IS_SON_OF]-(sons_of_brothers_of_my_sister)
+RETURN DISTINCT sons_of_brothers_of_my_sister.name
+
+6) Quem são os primos de Cousine que torcem para o Chelsea?
+
+6.1 – Creating Nodes
+MATCH (children1:People {name:"Jen-El Smith" })
+MATCH (children4:People {name:"Jor-El Smith” })
+CREATE (chelsea:SoccerTeam { name: “Chelsea”})
+CREATE (children1)-[:IS_FAN_OF]->(chelsea)
+CREATE (children4)-[:IS_FAN_OF]->(chelsea)
+
+6.2 - Query
+MATCH (cousin:People {name:"Cousine Smith Oliver" })
+MATCH (cousin)-[:IS_SON_OF]->(mysister)
+MATCH (mysister)-[:IS_SON_OF]->(ourparents)<-[:IS_SON_OF]-(brothers_of_my_sister)
+MATCH (brothers_of_my_sister)<-[:IS_SON_OF]-(sons_of_brothers_of_my_sister)
+MATCH (sons_of_brothers_of_my_sister)-[:IS_FAN_OF]->(soccer_team)
+WHERE soccer_team.name = "Chelsea"
